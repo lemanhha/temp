@@ -6,7 +6,7 @@ argList = sys.argv[1:]
 options = "m:i:o:p"
 longOptions = ["modelPath=", "inputPath=", "outputPath=", "processes="]
 
-# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json
+# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json -p 12
 modelPath = "../vietnews/tst-summarization"
 inputPath = "../vietnews/data/test_tokenized/"
 outputFile = "../vietnews/test_bartpho_with_vietnews_test.json"
@@ -25,8 +25,8 @@ try:
             print("Output: %s" % val)
             outputFile = val
         elif arg in ("-p", "--processes"):
-            print("Processes: %s" % val)
-            processes = val
+            print("Processes: %d" % int(val))
+            processes = int(val)
 except getopt.error as err:
     print(str(err))
 
