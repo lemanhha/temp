@@ -2,8 +2,8 @@ import os, json, getopt, sys, evaluate
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 argList = sys.argv[1:]
-options = "i:o:"
-longOptions = ["inputPath=", "outputPath="]
+options = "m:i:o:"
+longOptions = ["modelPath=", "inputPath=", "outputPath="]
 
 # python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/ -o ../vietnews/test_bartpho_with_vietnews_test.json
 modelPath = "../vietnews/tst-summarization"
