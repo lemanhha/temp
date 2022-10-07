@@ -3,13 +3,14 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from multiprocessing import Pool
 
 argList = sys.argv[1:]
-options = "m:i:o:"
-longOptions = ["modelPath=", "inputPath=", "outputPath="]
+options = "m:i:o:p"
+longOptions = ["modelPath=", "inputPath=", "outputPath=", "processes="]
 
 # python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json
 modelPath = "../vietnews/tst-summarization"
 inputPath = "../vietnews/data/test_tokenized/"
 outputFile = "../vietnews/test_bartpho_with_vietnews_test.json"
+processes = 12
 
 try:
     args, values = getopt.getopt(argList, options, longOptions)
@@ -23,6 +24,9 @@ try:
         elif arg in ("-o", "--outputPath"):
             print("Output: %s" % val)
             outputFile = val
+        elif arg in ("-p", "--processes"):
+            print("Processes: %s" % val)
+            processes = val
 except getopt.error as err:
     print(str(err))
 
@@ -96,7 +100,7 @@ def process(inputPath, outputFile):
 
 def parallelProcess(inputPath, outputFile):
     fileList = sorted(os.listdir(inputPath))
-    with Pool(12) as p:
+    with Pool(processes) as p:
         testResult = p.map(f, fileList)
     with open(outputFile, "w") as out:
         json.dump(testResult, out, ensure_ascii = False, indent = 4)
