@@ -106,5 +106,5 @@ def parallelProcess(inputPath, outputFile):
     with open(outputFile, "w") as out:
         json.dump(testResult, out, ensure_ascii = False, indent = 4)
 
-# process(inputPath, outputFile)
-parallelProcess(inputPath, outputFile)
+process(inputPath, outputFile)
+# parallelProcess(inputPath, outputFile)
