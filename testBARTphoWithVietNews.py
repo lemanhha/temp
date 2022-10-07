@@ -5,9 +5,9 @@ argList = sys.argv[1:]
 options = "m:i:o:"
 longOptions = ["modelPath=", "inputPath=", "outputPath="]
 
-# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/ -o ../vietnews/test_bartpho_with_vietnews_test.json
+# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json
 modelPath = "../vietnews/tst-summarization"
-inputPath = "../vietnews/data/train_tokenized/"
+inputPath = "../vietnews/data/test_tokenized/"
 outputPath = "../vietnews/test_bartpho_with_vietnews_test.json"
 
 try:
@@ -32,6 +32,7 @@ metric = evaluate.load('rouge')
 def process(inputPath, outputFile):
     fileList = os.listdir(inputPath)
     output = open(outputFile, "w", encoding='utf-8')
+    numberOfFiles = len(fileList)
     count = 0
     for fileName in fileList:
         print(fileName)
@@ -62,7 +63,7 @@ def process(inputPath, outputFile):
         output.write(json.dumps(result, ensure_ascii=False) + "\n")
 
         count += 1
-        if count == 10:
-            break
+        if count % 100 == 0:
+            print("%d / %d" % (count, numberOfFiles))
 
 process(inputPath, outputPath)
