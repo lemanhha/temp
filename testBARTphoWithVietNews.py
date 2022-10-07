@@ -32,7 +32,9 @@ metric = evaluate.load('rouge')
 def process(inputPath, outputFile):
     fileList = os.listdir(inputPath)
     output = open(outputFile, "w", encoding='utf-8')
+    count = 0
     for fileName in fileList:
+        print(fileName)
         with open(inputPath + fileName, "r") as docFile:
             lines = docFile.readlines()
         n = len(lines)
@@ -43,10 +45,7 @@ def process(inputPath, outputFile):
             if len(lines[i]) < 2:
                 break
             text += lines[i]
-        # sample = {
-        #     "text": text,
-        #     "summary": summary
-        # }
+
         tokens_input = tokenizer.encode(text, return_tensors='pt', max_length=512, truncation=True)
         summary_ids = model.generate(tokens_input, min_length=80, max_length=120)
         prediction = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
@@ -61,5 +60,9 @@ def process(inputPath, outputFile):
             "rougel": rouge['rougeL']
         }
         output.write(json.dumps(result, ensure_ascii=False) + "\n")
+
+        count += 1
+        if count == 10:
+            break
 
 process(inputPath, outputPath)
