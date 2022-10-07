@@ -35,7 +35,7 @@ def process(inputPath, outputFile):
     numberOfFiles = len(fileList)
     count = 0
     for fileName in fileList:
-        print(fileName)
+        # print(fileName)
         with open(inputPath + fileName, "r") as docFile:
             lines = docFile.readlines()
         n = len(lines)
