@@ -3,10 +3,10 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from multiprocessing import Pool
 
 argList = sys.argv[1:]
-options = "m:i:o:p"
+options = "m:i:o:pr"
 longOptions = ["modelPath=", "inputPath=", "outputPath=", "processes="]
 
-# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json -p 12
+# python testBARTphoWithVietNews.py -m ../vietnews/tst-summarization -i ../vietnews/data/test_tokenized/ -o ../vietnews/test_bartpho_with_vietnews_test.json --processes 12
 modelPath = "../vietnews/tst-summarization"
 inputPath = "../vietnews/data/test_tokenized/"
 outputFile = "../vietnews/test_bartpho_with_vietnews_test.json"
@@ -35,6 +35,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(modelPath)
 metric = evaluate.load('rouge')
 
 def f(fileName):
+    print(fileName)
     with open(inputPath + fileName, "r") as docFile:
         lines = docFile.readlines()
     n = len(lines)
