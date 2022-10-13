@@ -5,7 +5,9 @@ argList = sys.argv[1:]
 options = "m:i:o"
 longOptions = ["modelPath=", "inputPath=", "outputPath="]
 
-# python testBARTpho.py -m finetune-bartpho-vlsp -i vlsp2022_train_split/vlsp2022_test.json -o test-finetuned-bartpho/vlsp_test.json
+# python temp/testBARTpho.py -m finetune-bartpho-vlsp -i vlsp2022_train_split/vlsp2022_test.json --outputPath test-finetuned-bartpho/vlsp_test.json
+# python temp/testBARTpho.py -m finetune-bartpho-vmds -i vmds/vmds_test.json --outputPath test-finetuned-bartpho/vmds_test.json
+# python temp/testBARTpho.py -m finetune-bartpho-vims -i vims/vims_test.json --outputPath test-finetuned-bartpho/vims_test.json
 modelPath = "finetune-bartpho-vlsp"
 inputFile = "vlsp2022_train_split/vlsp2022_test.json"
 outputFile = "test-finetuned-bartpho/vlsp_test.json"
