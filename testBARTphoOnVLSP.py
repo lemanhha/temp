@@ -1,5 +1,5 @@
 # python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50 -i VLSP_Data/vlsp_abmusu_test_data.jsonl -o VLSP_Data/results.txt
-# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50 -i VLSP_Data/vlsp_2022_abmusu_validation_data_new.jsonl -o VLSP_Data/results.txt -e VLSP_Data/vlsp_validation_results.txt
+# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-48158 -i VLSP_Data/vlsp_2022_abmusu_validation_data_new.jsonl -o VLSP_Data/vlsp_validation_results.txt -e VLSP_Data/vlsp_validation_evaluation.json
 
 import json, getopt, sys
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -20,6 +20,7 @@ evaluationPath = ""
 try:
     args, values = getopt.getopt(argList, options, longOptions)
     for arg, val in args:
+    	print("arg = %s; val = %s" % (arg, val))
         if arg in ("-m", "--modelPath"):
             print("Model: %s" % val)
             modelPath = val
@@ -29,6 +30,9 @@ try:
         elif arg in ("-o", "--outputPath"):
             print("Output: %s" % val)
             outputPath = val
+        elif arg in ("-e", "--evaluationPath"):
+            print("Evaluation: %s" % val)
+            evaluationPath = val
 except getopt.error as err:
     print(str(err))
 
@@ -43,6 +47,7 @@ def getSingleDocument(documents):
     return '.'.join(document["raw_text"] for document in documents)
 
 def getSummary(multidocs, evaluate):
+    print(multidocs)
     jsonObject = json.loads(multidocs)
     documents = jsonObject["single_documents"]
     text = getSingleDocument(documents)
