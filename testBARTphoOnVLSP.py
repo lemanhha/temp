@@ -20,7 +20,7 @@ evaluationPath = ""
 try:
     args, values = getopt.getopt(argList, options, longOptions)
     for arg, val in args:
-    	print("arg = %s; val = %s" % (arg, val))
+        print("arg = %s; val = %s" % (arg, val))
         if arg in ("-m", "--modelPath"):
             print("Model: %s" % val)
             modelPath = val
