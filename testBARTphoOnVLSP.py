@@ -67,7 +67,7 @@ def process():
         lines = list(input)
 
     # calculate summaries
-    summaries = [getSummary(lines, evaluationPath != "")]
+    summaries = [getSummary(line, evaluationPath != "") for line in lines]
 
     # write prediction to output
     with open(outputPath, "w", encoding='utf-8') as output:
