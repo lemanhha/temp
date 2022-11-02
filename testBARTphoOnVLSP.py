@@ -47,7 +47,6 @@ def getSingleDocument(documents):
     return '.'.join(document["raw_text"] for document in documents)
 
 def getSummary(multidocs, evaluate):
-    print(multidocs)
     jsonObject = json.loads(multidocs)
     documents = jsonObject["single_documents"]
     text = getSingleDocument(documents)
@@ -59,6 +58,7 @@ def getSummary(multidocs, evaluate):
     scores = rougeScorer.get_scores(prediction, jsonObject["summary"]) if evaluate else None;
 
     summary = {"prediction": prediction, "scores": scores}
+    print(summary)
     return summary
 
 def process():
@@ -67,7 +67,11 @@ def process():
         lines = list(input)
 
     # calculate summaries
-    summaries = [getSummary(line, evaluationPath != "") for line in lines]
+    summaries = []
+    for line in lines:
+        summary = getSummary(line, evaluationPath != "")
+        summaries.append(summary)
+        print("Processed %d / %d" % (len(summaries), len(lines))
 
     # write prediction to output
     with open(outputPath, "w", encoding='utf-8') as output:
