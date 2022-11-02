@@ -1,5 +1,5 @@
 # python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50 -i VLSP_Data/vlsp_abmusu_test_data.jsonl -o VLSP_Data/results.txt
-# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-48158 -i VLSP_Data/vlsp_2022_abmusu_validation_data_new.jsonl -o VLSP_Data/vlsp_validation_results.txt -e VLSP_Data/vlsp_validation_evaluation.json
+# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-48158 -i VLSP_Data/vlsp_2022_abmusu_validation_data_new.jsonl -o VLSP_Data/vlsp_validation_results.txt --evaluationPath VLSP_Data/vlsp_validation_evaluation.json
 
 import json, getopt, sys
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
