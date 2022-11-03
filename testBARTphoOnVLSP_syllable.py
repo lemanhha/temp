@@ -1,5 +1,4 @@
-# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-96316 -i VLSP_Data/LexRank/vlsp2022_test_full.json --outputPath VLSP_Data/LexRank/results-checkpoint-96316.txt
-# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-48158 -i VLSP_Data/LexRank/vlsp2022_test_full.json --outputPath VLSP_Data/LexRank/results-checkpoint-48158.txt
+# python temp/testBARTphoOnVLSP_syllable.py -m finetune-bartpho-newscorpus10-syllable -i VLSP_Data/LexRank/vlsp2022_test_full.json --outputPath VLSP_Data/LexRank/results-syllable-10-percents.txt
 
 import json, getopt, sys
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -10,9 +9,9 @@ options = "m:i:o"
 longOptions = ["modelPath=", "inputPath=", "outputPath="]
 
 # Default arguments
-modelPath = "finetune-bartpho-newscorpus50/checkpoint-96316"
+modelPath = "finetune-bartpho-newscorpus10-syllable"
 inputPath = "VLSP_Data/LexRank/vlsp2022_test_full.json"
-outputPath = "VLSP_Data/LexRank/results-checkpoint-96316.txt"
+outputPath = "VLSP_Data/LexRank/results-syllable-10-percents.txt"
 
 # Parse arguments
 try:
@@ -38,6 +37,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(modelPath)
 def getSummary(multidocs):
     jsonObject = json.loads(multidocs)
     text = jsonObject["text"]
+    text = text.replace("_"," ")
 
     tokens_input = tokenizer.encode(text, return_tensors='pt', max_length=512, truncation=True)
     summary_ids = model.generate(tokens_input, min_length=256, max_length=512)
@@ -59,7 +59,7 @@ def process():
 
     # write prediction to output
     with open(outputPath, "w", encoding='utf-8') as output:
-        output.write("\n".join([summary.replace("_"," ") for summary in summaries]))
+        output.write("\n".join([summary for summary in summaries]))
         output.close()
 
 process()
