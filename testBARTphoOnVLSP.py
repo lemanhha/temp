@@ -1,4 +1,4 @@
-# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-96316 -i VLSP_Data/LexRank/vlsp2022_test_full.json -o VLSP_Data/LexRank/results.txt
+# python temp/testBARTphoOnVLSP.py -m finetune-bartpho-newscorpus50/checkpoint-96316 -i VLSP_Data/LexRank/vlsp2022_test_full.json --outputPath VLSP_Data/LexRank/results.txt
 
 import json, getopt, sys
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -36,7 +36,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(modelPath)
 
 def getSummary(multidocs):
     jsonObject = json.loads(multidocs)
-    text = jsonObject["raw_text"]
+    text = jsonObject["text"]
 
     tokens_input = tokenizer.encode(text, return_tensors='pt', max_length=512, truncation=True)
     summary_ids = model.generate(tokens_input, min_length=256, max_length=512)
