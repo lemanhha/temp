@@ -58,7 +58,7 @@ def process():
 
     # write prediction to output
     with open(outputPath, "w", encoding='utf-8') as output:
-        output.write("\n".join([summary["prediction"] for summary in summaries]))
+        output.write("\n".join([summary.replace("_"," ") for summary in summaries]))
         output.close()
 
 process()
